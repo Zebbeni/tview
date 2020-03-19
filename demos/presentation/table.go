@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Zebbeni/tview"
 	"github.com/gdamore/tcell"
-	"github.com/rivo/tview"
 )
 
 const tableData = `OrderDate|Region|Rep|Item|Units|UnitCost|Total

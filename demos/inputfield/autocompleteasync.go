@@ -7,8 +7,8 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/Zebbeni/tview"
 	"github.com/gdamore/tcell"
-	"github.com/rivo/tview"
 )
 
 type company struct {

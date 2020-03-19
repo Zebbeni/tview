@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/Zebbeni/tview"
 	"github.com/gdamore/tcell"
-	"github.com/rivo/tview"
 )
 
 // Grid demonstrates the grid layout.

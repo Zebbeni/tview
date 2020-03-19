@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/Zebbeni/tview"
 	"github.com/gdamore/tcell"
-	"github.com/rivo/tview"
 )
 
 const inputField = `[green]package[white] main
@@ -11,7 +11,7 @@ const inputField = `[green]package[white] main
     [red]"strconv"[white]
 
     [red]"github.com/gdamore/tcell"[white]
-    [red]"github.com/rivo/tview"[white]
+    [red]"github.com/Zebbeni/tview"[white]
 )
 
 [green]func[white] [yellow]main[white]() {
