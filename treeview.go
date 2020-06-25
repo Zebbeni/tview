@@ -681,12 +681,13 @@ func (t *TreeView) Draw(screen tcell.Screen) {
 func (t *TreeView) InputHandler() func(event *tcell.EventKey, setFocus func(p Primitive)) {
 	return t.WrapInputHandler(func(event *tcell.EventKey, setFocus func(p Primitive)) {
 		selectNode := func() {
-			if t.currentNode != nil {
+			node := t.currentNode
+			if node != nil {
 				if t.selected != nil {
-					t.selected(t.currentNode)
+					t.selected(node)
 				}
-				if t.currentNode.selected != nil {
-					t.currentNode.selected()
+				if node.selected != nil {
+					node.selected()
 				}
 			}
 		}
@@ -728,5 +729,47 @@ func (t *TreeView) InputHandler() func(event *tcell.EventKey, setFocus func(p Pr
 		}
 
 		t.process()
+	})
+}
+
+// MouseHandler returns the mouse handler for this primitive.
+func (t *TreeView) MouseHandler() func(action MouseAction, event *tcell.EventMouse, setFocus func(p Primitive)) (consumed bool, capture Primitive) {
+	return t.WrapMouseHandler(func(action MouseAction, event *tcell.EventMouse, setFocus func(p Primitive)) (consumed bool, capture Primitive) {
+		x, y := event.Position()
+		if !t.InRect(x, y) {
+			return false, nil
+		}
+
+		switch action {
+		case MouseLeftClick:
+			setFocus(t)
+			_, rectY, _, _ := t.GetInnerRect()
+			y -= rectY
+			if y >= 0 && y < len(t.nodes) {
+				node := t.nodes[y]
+				if node.selectable {
+					previousNode := t.currentNode
+					t.currentNode = node
+					if previousNode != node && t.changed != nil {
+						t.changed(node)
+					}
+					if t.selected != nil {
+						t.selected(node)
+					}
+					if node.selected != nil {
+						node.selected()
+					}
+				}
+			}
+			consumed = true
+		case MouseScrollUp:
+			t.movement = treeUp
+			consumed = true
+		case MouseScrollDown:
+			t.movement = treeDown
+			consumed = true
+		}
+
+		return
 	})
 }
