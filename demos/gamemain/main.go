@@ -94,13 +94,14 @@ func createMainMenu() *tview.Flex {
 
 	mainMenuWidth := 0
 
-	menu.AddItem(tview.NewBox(), 0, 1, false) // spacer
+	menu.AddItem(tview.NewBox(), 1, 1, false) // spacer
 	for _, menuItemText := range mainMenuItemsText {
 		menu.AddItem(tview.NewTextView().SetTextAlign(tview.AlignLeft).SetText(menuItemText), 1, 1, false)
 		if len(menuItemText) > mainMenuWidth {
 			mainMenuWidth = len(menuItemText)
 		}
 	}
+	menu.AddItem(tview.NewBox(), 1, 1, false) // spacer
 
 	selector := createSelector()
 	menu.AddItem(selector, 3, 1, false)
