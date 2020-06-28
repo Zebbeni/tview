@@ -37,8 +37,9 @@ var (
 )
 
 func main() {
-	app := tview.NewApplication()
+	setDefaultStyles()
 
+	app := tview.NewApplication()
 	topMenu := createTopMenu()
 	graphic := createGraphic()
 	mainMenu := createMainMenu()
@@ -47,7 +48,7 @@ func main() {
 		AddItem(graphic, 0, 1, false).
 		AddItem(mainMenu, 10, 1, false)
 	flex.SetBorder(true)
-	flex.SetBackgroundColor(tcell.ColorBlack)
+	flex.SetBorderPadding(0, 0, 1, 1)
 	if err := app.SetRoot(flex, true).EnableMouse(true).Run(); err != nil {
 		panic(err)
 	}
@@ -56,7 +57,6 @@ func main() {
 func createTopMenu() *tview.Flex {
 	topMenu := tview.NewFlex()
 	topMenu.SetBorder(true)
-	topMenu.SetBackgroundColor(tcell.ColorBlack)
 	topMenu.AddItem(tview.NewBox(), 0, 1, false)
 
 	for _, itemText := range topMenuItemsText {
@@ -101,11 +101,10 @@ func createMainMenu() *tview.Flex {
 			mainMenuWidth = len(menuItemText)
 		}
 	}
-	menu.AddItem(tview.NewBox(), 0, 1, false) // spacer
 
 	selector := createSelector()
 	menu.AddItem(selector, 3, 1, false)
-	menu.AddItem(tview.NewBox(), 0, 1, false) // spacer
+	menu.AddItem(tview.NewBox(), 1, 1, false) // spacer
 
 	flex := tview.NewFlex()
 	flex.AddItem(tview.NewBox(), 0, 1, false)
@@ -129,4 +128,21 @@ func createSelector() *tview.Flex {
 	flex.AddItem(input, 5, 1, false)
 
 	return flex
+}
+
+func setDefaultStyles() {
+	tview.Styles = tview.Theme{
+		PrimitiveBackgroundColor:    tcell.ColorDefault,
+		ContrastBackgroundColor:     tcell.ColorDefault,
+		MoreContrastBackgroundColor: tcell.ColorDefault,
+		BorderColor:                 tcell.ColorDefault,
+		TitleColor:                  tcell.ColorDefault,
+		GraphicsColor:               tcell.ColorDefault,
+		PrimaryTextColor:            tcell.ColorDefault,
+		SecondaryTextColor:          tcell.ColorDefault,
+		TertiaryTextColor:           tcell.ColorDefault,
+		InverseTextColor:            tcell.ColorDefault,
+		ContrastSecondaryTextColor:  tcell.ColorDefault,
+	}
+
 }
