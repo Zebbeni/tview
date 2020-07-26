@@ -38,13 +38,17 @@ func createGameGrid() *tview.Grid {
 		attributeItem := tview.NewTextView().
 			SetTextAlign(tview.AlignCenter).
 			SetText(attribute + ":")
+		attributeItem.SetRect(0, 0,10, 5)
 		valueItem := tview.NewTextView().
 			SetTextAlign(tview.AlignCenter).
 			SetText(value).
 			SetTextAlign(tview.AlignLeft).
 			SetWordWrap(true)
+		valueItem.SetRect(0, 0,14, 5)
 		grid.AddItem(attributeItem, row, 0, 1, 1, 0, 0, false).
 			AddItem(valueItem, row, 1, 1, 1, 0, 0, false)
+		x, y, wid, hei := valueItem.GetRect()
+		println(">>> x:", x, "y:", y, "wid:", wid, "hei:", hei)
 		row++
 	}
 	return grid
